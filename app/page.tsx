@@ -64,24 +64,30 @@ function Pipeline({ steps, title }: { steps: string[]; title: string }) {
   return (
     <figure className="pipeline">
       <svg className="pipeline-horizontal" viewBox={`0 0 ${desktopWidth} 82`} role="img" aria-label={`${title}: ${steps.join(" to ")}`}>
-        <defs><marker id={`arrow-${steps.length}-${steps[0]}`} markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#161513" /></marker></defs>
+        <defs><marker id={`arrow-${steps.length}-${steps[0]}`} markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--ink)" /></marker></defs>
         {steps.map((step, index) => {
           const x = index * gap + 7;
           const width = gap - 28;
           return <g key={step}>
-            {index < steps.length - 1 && <line x1={x + width} y1="41" x2={(index + 1) * gap + 2} y2="41" stroke="#161513" strokeWidth="1" markerEnd={`url(#arrow-${steps.length}-${steps[0]})`} />}
-            <rect x={x} y="22" width={width} height="38" rx="3" fill="#F4F2ED" stroke="#161513" />
+            {index < steps.length - 1 && <>
+              <line className="flow-line" x1={x + width} y1="41" x2={(index + 1) * gap + 2} y2="41" markerEnd={`url(#arrow-${steps.length}-${steps[0]})`} />
+              <line className="flow-signal" pathLength="100" x1={x + width} y1="41" x2={(index + 1) * gap + 2} y2="41" />
+            </>}
+            <rect className="pipeline-node" x={x} y="22" width={width} height="38" rx="3" />
             <text x={x + width / 2} y="45" textAnchor="middle">{step}</text>
           </g>;
         })}
       </svg>
       <svg className="pipeline-vertical" viewBox={`0 0 260 ${mobileHeight}`} role="img" aria-label={`${title}: ${steps.join(" to ")}`}>
-        <defs><marker id={`varrow-${steps.length}-${steps[0]}`} markerWidth="6" markerHeight="6" refX="3" refY="5" orient="auto"><path d="M0,0 L6,0 L3,6 Z" fill="#161513" /></marker></defs>
+        <defs><marker id={`varrow-${steps.length}-${steps[0]}`} markerWidth="6" markerHeight="6" refX="3" refY="5" orient="auto"><path d="M0,0 L6,0 L3,6 Z" fill="var(--ink)" /></marker></defs>
         {steps.map((step, index) => {
           const y = index * 66 + 5;
           return <g key={step}>
-            {index < steps.length - 1 && <line x1="130" y1={y + 38} x2="130" y2={y + 60} stroke="#161513" markerEnd={`url(#varrow-${steps.length}-${steps[0]})`} />}
-            <rect x="50" y={y} width="160" height="38" rx="3" fill="#F4F2ED" stroke="#161513" />
+            {index < steps.length - 1 && <>
+              <line className="flow-line" x1="130" y1={y + 38} x2="130" y2={y + 60} markerEnd={`url(#varrow-${steps.length}-${steps[0]})`} />
+              <line className="flow-signal" pathLength="100" x1="130" y1={y + 38} x2="130" y2={y + 60} />
+            </>}
+            <rect className="pipeline-node" x="50" y={y} width="160" height="38" rx="3" />
             <text x="130" y={y + 23} textAnchor="middle">{step}</text>
           </g>;
         })}
@@ -89,6 +95,33 @@ function Pipeline({ steps, title }: { steps: string[]; title: string }) {
       <figcaption>{title} process schematic.</figcaption>
     </figure>
   );
+}
+
+function AutomationTopology() {
+  return <figure className="automation-topology">
+    <div className="topology-meta">
+      <span>LIVE AUTOMATION / 01</span>
+      <span className="run-state"><i aria-hidden="true" />RUNNING</span>
+    </div>
+    <div className="topology-stage" aria-hidden="true">
+      <div className="topology-node trigger"><small>TRIGGER</small><strong>New inquiry</strong></div>
+      <div className="signal-rail"><i /></div>
+      <div className="topology-node agent">
+        <span className="agent-grid"><i /><i /><i /><i /></span>
+        <small>AI AGENT</small><strong>Qualify + route</strong>
+      </div>
+      <div className="signal-rail second"><i /></div>
+      <div className="topology-branches">
+        <div><span>01</span><strong>Calendar</strong></div>
+        <div><span>02</span><strong>CRM</strong></div>
+        <div><span>03</span><strong>Human handoff</strong></div>
+      </div>
+    </div>
+    <div className="topology-foot">
+      <span>event_02418</span><span>validated</span><span>320 ms</span>
+    </div>
+    <figcaption>An example automation routing an inbound opportunity through an AI agent into scheduling, CRM, and a human handoff.</figcaption>
+  </figure>;
 }
 
 function SectionHead({ number, name, title, line }: { number: string; name: string; title: string; line?: string }) {
@@ -119,6 +152,7 @@ export default function Home() {
             <a className="button secondary" href={whatsappHref} target="_blank" rel="noreferrer">WhatsApp</a>
             <span className="confirm quiet">LinkedIn · [CONFIRM: LinkedIn URL]</span>
           </div>
+          <AutomationTopology />
         </div>
         <figure className="portrait">
           <img src={`${basePath}/hoozaifa-morbiwala-headshot.webp`} width="1000" height="1000" alt="Hoozaifa Morbiwala, AI Solutions Engineer" fetchPriority="high" />
