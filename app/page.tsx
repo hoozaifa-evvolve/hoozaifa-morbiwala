@@ -102,29 +102,41 @@ export default function Home() {
       </header>
 
       <section className="hero section-shell" id="command-deck" aria-labelledby="hero-title">
-        <div className="hero-grid" aria-hidden="true">
-          <div className="orbit orbit-a" />
-          <div className="orbit orbit-b" />
-          <div className="crosshair"><i /><i /></div>
-          <div className="coordinate">23.5505° S / 46.6333° W</div>
-          <div className="signal-trace"><i /><i /><i /><i /><i /><i /><i /><i /></div>
-        </div>
         <div className="hero-copy">
-          <p className="kicker"><span className="pulse" /> COMMAND DECK / SÃO PAULO / ONLINE</p>
-          <h1 id="hero-title">AI systems that<br />make it to <em>launch.</em></h1>
-          <p className="hero-line">Solutions Engineer connecting discovery, architecture, automation, and enterprise delivery.</p>
+          <p className="kicker"><span className="pulse" /> AI SYSTEMS THAT MAKE IT TO LAUNCH.</p>
+          <p className="hero-name">HOOZAIFA MORBIWALA</p>
+          <p className="hero-role">AI SOLUTIONS ENGINEER</p>
+          <h1 id="hero-title">I turn complex AI ideas into systems that <em>launch.</em></h1>
+          <p className="hero-line">10+ years moving customers from discovery to production across Voice AI, APIs, automation, and enterprise onboarding.</p>
+          <p className="availability"><span>AVAILABLE</span> Open to full-time Solutions Engineering / AI Delivery roles and select projects.</p>
           <div className="hero-actions">
-            <a className="button primary" href="#mission-logs">View mission logs <Arrow /></a>
-            <a className="button secondary" href="#open-channel">Start a conversation</a>
+            <a className="button primary" href="mailto:mhoozaifa@gmail.com?subject=Solutions%20Engineering%20Opportunity">Email me <Arrow /></a>
+            <a className="button secondary" href="https://wa.me/5511999256971?text=Hi%20Hoozaifa%2C%20I%20found%20your%20portfolio%20and%20would%20like%20to%20discuss%20an%20opportunity." target="_blank" rel="noreferrer">Chat on WhatsApp</a>
           </div>
         </div>
-        <p className="availability">OPEN TO SOLUTIONS ENGINEERING<br />AND AI DELIVERY ROLES</p>
+        <figure className="mission-profile">
+          <div className="profile-status"><span className="pulse" /> MISSION PROFILE / ONLINE</div>
+          <div className="portrait-wrap">
+            <img
+              src={`${basePath}/hoozaifa-morbiwala-headshot.webp`}
+              width="1000"
+              height="1000"
+              alt="Hoozaifa Morbiwala, AI Solutions Engineer"
+              fetchPriority="high"
+              loading="eager"
+              decoding="async"
+            />
+            <span className="portrait-corner corner-a" aria-hidden="true" />
+            <span className="portrait-corner corner-b" aria-hidden="true" />
+          </div>
+          <figcaption><span>OPERATOR</span> HOOZAIFA MORBIWALA <b>23.5505° S / 46.6333° W</b></figcaption>
+        </figure>
         <div className="scroll-cue" aria-hidden="true"><span>SCROLL TO TELEMETRY</span><i /></div>
       </section>
 
       <section className="telemetry section-shell" aria-labelledby="telemetry-title">
         <div className="section-heading">
-          <p className="kicker">LIVE TELEMETRY</p>
+          <p className="kicker">LIVE TELEMETRY / MY TRACK RECORD</p>
           <h2 id="telemetry-title">Proof, at a glance.</h2>
         </div>
         <div className="metric-grid">
@@ -141,7 +153,7 @@ export default function Home() {
 
       <section className="mission-select section-shell" aria-labelledby="select-title">
         <div className="section-heading row">
-          <div><p className="kicker">MISSION SELECT</p><h2 id="select-title">Where I create leverage.</h2></div>
+          <div><p className="kicker">WHAT I DO / MISSION SELECT</p><h2 id="select-title">How I create leverage.</h2></div>
           <p className="section-note">Three operating modes.<br />One accountable owner.</p>
         </div>
         <div className="mission-console">
@@ -173,7 +185,7 @@ export default function Home() {
 
       <section className="logs section-shell" id="mission-logs" aria-labelledby="logs-title">
         <div className="section-heading row">
-          <div><p className="kicker">MISSION LOGS</p><h2 id="logs-title">Systems shipped.<br />Outcomes recorded.</h2></div>
+          <div><p className="kicker">MY TRACK RECORD / MISSION LOGS</p><h2 id="logs-title">Systems I’ve shipped.<br />Outcomes I’ve delivered.</h2></div>
           <p className="section-note">Selected operational evidence<br />from live enterprise work.</p>
         </div>
         <div className="log-list">
@@ -189,8 +201,8 @@ export default function Home() {
 
       <section className="sequence section-shell" aria-labelledby="sequence-title">
         <div className="section-heading">
-          <p className="kicker">LAUNCH SEQUENCE</p>
-          <h2 id="sequence-title">From ambiguity to orbit.</h2>
+          <p className="kicker">HOW I DELIVER / LAUNCH SEQUENCE</p>
+          <h2 id="sequence-title">From ambiguity to launch.</h2>
         </div>
         <ol>
           {["Discover", "Architect", "Build", "QA", "Launch", "Optimize"].map((step, index) => (
@@ -201,7 +213,7 @@ export default function Home() {
 
       <section className="profile section-shell" id="operator-profile" aria-labelledby="profile-title">
         <div className="profile-intro">
-          <p className="kicker">OPERATOR PROFILE</p>
+          <p className="kicker">WHERE I’VE DONE IT / OPERATOR PROFILE</p>
           <h2 id="profile-title">Technical depth.<br />Delivery instinct.</h2>
           <p>10+ years turning complex SaaS requirements into systems customers can understand, trust, and use.</p>
           <div className="profile-meta">
@@ -225,8 +237,8 @@ export default function Home() {
           <h2 id="contact-title">Have a complex system<br />that needs to <em>ship?</em></h2>
           <p>Let’s talk about the opportunity, the customer, and what “live” needs to mean.</p>
           <div className="hero-actions">
-            <a className="button primary" href="mailto:mhoozaifa@gmail.com?subject=Solutions%20Engineering%20Opportunity">Email Hoozaifa <Arrow /></a>
-            <a className="button secondary" href="https://wa.me/5511999256971?text=Hi%20Hoozaifa%2C%20I%20found%20your%20portfolio%20and%20would%20like%20to%20discuss%20an%20opportunity." target="_blank" rel="noreferrer">WhatsApp</a>
+            <a className="button primary" href="mailto:mhoozaifa@gmail.com?subject=Solutions%20Engineering%20Opportunity">Email me <Arrow /></a>
+            <a className="button secondary" href="https://wa.me/5511999256971?text=Hi%20Hoozaifa%2C%20I%20found%20your%20portfolio%20and%20would%20like%20to%20discuss%20an%20opportunity." target="_blank" rel="noreferrer">Chat on WhatsApp</a>
           </div>
         </div>
         <aside className="resume-console" aria-labelledby="resume-title">
