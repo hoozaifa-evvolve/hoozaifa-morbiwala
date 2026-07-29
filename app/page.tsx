@@ -38,24 +38,51 @@ const telemetry = [
   ["99.9%", "UPTIME"],
 ];
 
-const logs = [
+const automationSystems = [
   {
-    code: "LOG 01",
-    title: "Voice AI at scale",
-    note: "Real-time systems connecting speech, telephony, streaming audio, and tool calls.",
-    stats: [["200K+", "calls / month"], ["850ms", "median latency"], ["99.9%", "uptime"]],
+    code: "USE CASE 01",
+    category: "VOICE AI / REVENUE",
+    title: "AI Front Desk & Booking Agent",
+    pain: "Missed calls, slow follow-up, and staff tied up answering the same questions.",
+    workflow: ["Answer", "qualify", "book", "update CRM", "route to a human"],
+    capability: "Always-on inbound and outbound voice agents for FAQs, qualification, scheduling, routing, and live handoff.",
+    proof: ["200K+ calls / month", "81% containment", "99.9% uptime"],
   },
   {
-    code: "LOG 02",
-    title: "Technical Sales",
-    note: "Discovery, solution architecture, tailored demos, POCs, and technical objection handling.",
-    stats: [["72%", "technical win rate"], ["65%", "POC conversion"], ["$1.5M+", "ARR influenced"]],
+    code: "USE CASE 02",
+    category: "SALES / GTM",
+    title: "Lead-to-Meeting Revenue Engine",
+    pain: "Leads go cold while teams research, route, and follow up manually.",
+    workflow: ["Capture", "enrich", "score", "assign", "alert", "follow up"],
+    capability: "Connect forms, enrichment, CRM, ownership rules, Slack, and personalized follow-up into one fast pipeline.",
+    proof: ["<5 min response time", "31% lift in demo bookings", "15K+ events / day"],
   },
   {
-    code: "LOG 03",
-    title: "Automation",
-    note: "Production workflows and internal tools across revenue, support, and customer success.",
-    stats: [["30+", "production systems"], ["25+", "hours saved / week"], ["<5 min", "lead response"]],
+    code: "USE CASE 03",
+    category: "CUSTOMER SERVICE",
+    title: "AI Support & Living Knowledge Agent",
+    pain: "Repeated questions consume support time while answers stay scattered across tickets, docs, and Slack.",
+    workflow: ["Ingest", "retrieve", "resolve", "create ticket", "escalate"],
+    capability: "RAG-powered support agents that answer routine questions, update systems, and hand complex issues to people with context.",
+    proof: ["35% auto-resolved", "40% faster first response", "45% fewer repeat questions"],
+  },
+  {
+    code: "USE CASE 04",
+    category: "DATA / SCRAPING",
+    title: "Market & Prospect Intelligence Pipeline",
+    pain: "Teams lose hours collecting incomplete data from websites, directories, and public sources.",
+    workflow: ["Scrape", "normalize", "dedupe", "enrich", "sync CRM", "alert"],
+    capability: "Reliable web-data pipelines that turn fragmented sources into clean prospect, competitor, pricing, or market intelligence.",
+    proof: ["1,000+ prospects / month", "50% less research time", "10K+ CRM records / month"],
+  },
+  {
+    code: "USE CASE 05",
+    category: "OPERATIONS / DELIVERY",
+    title: "Client Onboarding & Operations Autopilot",
+    pain: "Growth stalls when intake, setup, approvals, QA, and handoffs depend on memory.",
+    workflow: ["Intake", "validate", "configure", "QA", "train", "launch", "monitor"],
+    capability: "End-to-end delivery workflows connecting forms, CRM, tasks, checklists, documentation, alerts, and account health.",
+    proof: ["3 weeks → 6 days", "15+ handoffs removed", "4× accounts, no added headcount"],
   },
 ];
 
@@ -185,15 +212,40 @@ export default function Home() {
 
       <section className="logs section-shell" id="mission-logs" aria-labelledby="logs-title">
         <div className="section-heading row">
-          <div><p className="kicker">MY TRACK RECORD / MISSION LOGS</p><h2 id="logs-title">Systems I’ve shipped.<br />Outcomes I’ve delivered.</h2></div>
-          <p className="section-note">Selected operational evidence<br />from live enterprise work.</p>
+          <div>
+            <p className="kicker">MY TRACK RECORD / AUTOMATION LIBRARY</p>
+            <h2 id="logs-title">Five systems I’ve<br />already shipped.</h2>
+          </div>
+          <div className="library-intro">
+            <p>Built for growing businesses that need more capacity without more overhead.</p>
+            <span>Real workflows. Production scale. Measurable outcomes.</span>
+          </div>
         </div>
-        <div className="log-list">
-          {logs.map((log) => (
-            <article className="log" key={log.code}>
-              <p className="log-code">{log.code} <span>COMPLETE</span></p>
-              <div><h3>{log.title}</h3><p>{log.note}</p></div>
-              <div className="log-stats">{log.stats.map(([value, label]) => <p key={label}><strong>{value}</strong><span>{label}</span></p>)}</div>
+        <div className="automation-library">
+          {automationSystems.map((system, index) => (
+            <article className={`automation-card ${index === 0 ? "featured" : ""}`} key={system.code}>
+              <header>
+                <p>{system.code}</p>
+                <span>{system.category}</span>
+              </header>
+              <h3>{system.title}</h3>
+              <div className="system-story">
+                <div className="story-block pain-block">
+                  <span>PAIN</span>
+                  <p>{system.pain}</p>
+                </div>
+                <div className="story-block system-block">
+                  <span>AUTOMATED SYSTEM</span>
+                  <ol className="workflow" aria-label={`${system.title} workflow`}>
+                    {system.workflow.map((step) => <li key={step}>{step}</li>)}
+                  </ol>
+                  <p>{system.capability}</p>
+                </div>
+                <div className="story-block proof-block">
+                  <span>PROOF</span>
+                  <ul>{system.proof.map((item) => <li key={item}>{item}</li>)}</ul>
+                </div>
+              </div>
             </article>
           ))}
         </div>
