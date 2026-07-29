@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
 const missions = [
   {
     id: "architecture",
@@ -230,8 +232,8 @@ export default function Home() {
         <aside className="resume-console" aria-labelledby="resume-title">
           <p className="kicker">RESUME CONSOLE</p>
           <h3 id="resume-title">Choose your briefing.</h3>
-          <a href="/Hoozaifa-Morbiwala-Solutions-Engineer-Resume.pdf" download><span><b>01</b>Solutions Engineering<small>AI · AUTOMATION · PRESALES</small></span><Arrow /></a>
-          <a href="/Hoozaifa-Morbiwala-Onboarding-Implementation-Resume.pdf" download><span><b>02</b>Onboarding & Implementation<small>ADOPTION · DELIVERY · SUCCESS</small></span><Arrow /></a>
+          <a href={`${basePath}/Hoozaifa-Morbiwala-Solutions-Engineer-Resume.pdf`} download><span><b>01</b>Solutions Engineering<small>AI · AUTOMATION · PRESALES</small></span><Arrow /></a>
+          <a href={`${basePath}/Hoozaifa-Morbiwala-Onboarding-Implementation-Resume.pdf`} download><span><b>02</b>Onboarding & Implementation<small>ADOPTION · DELIVERY · SUCCESS</small></span><Arrow /></a>
         </aside>
       </section>
 
