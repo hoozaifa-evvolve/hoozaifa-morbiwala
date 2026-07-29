@@ -1,9 +1,12 @@
+import SystemReadout, { type ReadoutKind } from "./system-readout";
+
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 const emailHref = "mailto:mhoozaifa@gmail.com?subject=Solutions%20Engineering%20Opportunity";
 const whatsappHref = "https://wa.me/5511999256971?text=Hi%20Hoozaifa%2C%20I%20found%20your%20portfolio%20and%20would%20like%20to%20discuss%20an%20opportunity.";
 
 type System = {
+  kind: ReadoutKind;
   label: string;
   title: string;
   context: string;
@@ -16,6 +19,7 @@ type System = {
 
 const systems: System[] = [
   {
+    kind: "front-desk",
     label: "SYSTEM 01 · VOICE AI",
     title: "AI Front Desk & Booking Agent",
     context: "[CONFIRM: attribution for AI Front Desk & Booking Agent — Synthflow, client project, etc.]",
@@ -26,6 +30,7 @@ const systems: System[] = [
     stack: ["Twilio", "Deepgram", "ElevenLabs", "Calendly", "HubSpot", "Slack"],
   },
   {
+    kind: "lead-engine",
     label: "SYSTEM 02 · SALES AUTOMATION",
     title: "Lead-to-Meeting Revenue Engine",
     context: "[CONFIRM: attribution for Lead-to-Meeting Revenue Engine — employer, client project, etc.]",
@@ -36,6 +41,7 @@ const systems: System[] = [
     stack: ["HubSpot", "Salesforce", "Calendly", "Google Meet", "Slack", "n8n"],
   },
   {
+    kind: "support-agent",
     label: "SYSTEM 03 · CUSTOMER SUPPORT",
     title: "AI Support & Living Knowledge Agent",
     context: "[CONFIRM: attribution for AI Support & Living Knowledge Agent — employer, client project, etc.]",
@@ -46,7 +52,8 @@ const systems: System[] = [
     stack: ["Zendesk", "Freshdesk", "Confluence", "Slack", "Pinecone", "Supabase"],
   },
   {
-    label: "SYSTEM 04 · DELIVERY OPERATIONS",
+    kind: "onboarding",
+    label: "SYSTEM 05 · DELIVERY OPERATIONS",
     title: "Client Onboarding & Operations Autopilot",
     context: "[CONFIRM: attribution for Client Onboarding & Operations Autopilot — employer, client project, etc.]",
     problem: "Growth stalled when intake, setup, approvals, QA, and handoffs depended on memory.",
@@ -71,7 +78,6 @@ function Pipeline({ steps, title }: { steps: string[]; title: string }) {
           return <g key={step}>
             {index < steps.length - 1 && <>
               <line className="flow-line" x1={x + width} y1="41" x2={(index + 1) * gap + 2} y2="41" markerEnd={`url(#arrow-${steps.length}-${steps[0]})`} />
-              <line className="flow-signal" pathLength="100" x1={x + width} y1="41" x2={(index + 1) * gap + 2} y2="41" />
             </>}
             <rect className="pipeline-node" x={x} y="22" width={width} height="38" rx="3" />
             <text x={x + width / 2} y="45" textAnchor="middle">{step}</text>
@@ -85,7 +91,6 @@ function Pipeline({ steps, title }: { steps: string[]; title: string }) {
           return <g key={step}>
             {index < steps.length - 1 && <>
               <line className="flow-line" x1="130" y1={y + 38} x2="130" y2={y + 60} markerEnd={`url(#varrow-${steps.length}-${steps[0]})`} />
-              <line className="flow-signal" pathLength="100" x1="130" y1={y + 38} x2="130" y2={y + 60} />
             </>}
             <rect className="pipeline-node" x="50" y={y} width="160" height="38" rx="3" />
             <text x="130" y={y + 23} textAnchor="middle">{step}</text>
@@ -95,33 +100,6 @@ function Pipeline({ steps, title }: { steps: string[]; title: string }) {
       <figcaption>{title} process schematic.</figcaption>
     </figure>
   );
-}
-
-function AutomationTopology() {
-  return <figure className="automation-topology">
-    <div className="topology-meta">
-      <span>LIVE AUTOMATION / 01</span>
-      <span className="run-state"><i aria-hidden="true" />RUNNING</span>
-    </div>
-    <div className="topology-stage" aria-hidden="true">
-      <div className="topology-node trigger"><small>TRIGGER</small><strong>New inquiry</strong></div>
-      <div className="signal-rail"><i /></div>
-      <div className="topology-node agent">
-        <span className="agent-grid"><i /><i /><i /><i /></span>
-        <small>AI AGENT</small><strong>Qualify + route</strong>
-      </div>
-      <div className="signal-rail second"><i /></div>
-      <div className="topology-branches">
-        <div><span>01</span><strong>Calendar</strong></div>
-        <div><span>02</span><strong>CRM</strong></div>
-        <div><span>03</span><strong>Human handoff</strong></div>
-      </div>
-    </div>
-    <div className="topology-foot">
-      <span>event_02418</span><span>validated</span><span>320 ms</span>
-    </div>
-    <figcaption>An example automation routing an inbound opportunity through an AI agent into scheduling, CRM, and a human handoff.</figcaption>
-  </figure>;
 }
 
 function SectionHead({ number, name, title, line }: { number: string; name: string; title: string; line?: string }) {
@@ -152,7 +130,6 @@ export default function Home() {
             <a className="button secondary" href={whatsappHref} target="_blank" rel="noreferrer">WhatsApp</a>
             <span className="confirm quiet">LinkedIn · [CONFIRM: LinkedIn URL]</span>
           </div>
-          <AutomationTopology />
         </div>
         <figure className="portrait">
           <img src={`${basePath}/hoozaifa-morbiwala-headshot.webp`} width="1000" height="1000" alt="Hoozaifa Morbiwala, AI Solutions Engineer" fetchPriority="high" />
@@ -183,7 +160,7 @@ export default function Home() {
             </dl>
             <div className="system-block">
               <p className="minor-label">System</p>
-              <Pipeline steps={system.steps} title={system.title} />
+              <SystemReadout kind={system.kind} title={system.title} />
               <p>{system.description}</p>
             </div>
             <div className="outcome-block">
@@ -242,6 +219,7 @@ export default function Home() {
       </section>
     </main>
     <footer>
+      <p className="system-ready">SYSTEM READY_<span aria-hidden="true">▊</span></p>
       <div className="title-block">
         <div><span>NAME</span><strong>Hoozaifa Morbiwala</strong></div>
         <div><span>TITLE</span><strong>AI Solutions Engineer</strong></div>
@@ -249,7 +227,7 @@ export default function Home() {
         <div><span>REV</span><strong>2026.07</strong></div>
         <div><span>CONTACT</span><strong>mhoozaifa@gmail.com</strong></div>
       </div>
-      <p>Typeset in Archivo and IBM Plex Mono. Designed and written by me.</p>
+      <p>Typeset in Archivo, IBM Plex Mono, and VT323. Designed and written by me.</p>
     </footer>
   </>;
 }
