@@ -1,335 +1,221 @@
-"use client";
-
-import { useState } from "react";
-
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
-const missions = [
-  {
-    id: "architecture",
-    label: "Solutions Architecture",
-    eyebrow: "DISCOVERY → DEPLOYMENT",
-    title: "Turn operational friction into a launchable system.",
-    copy: "Technical discovery, integration maps, tailored demos, POCs, and rollout plans—translated clearly for buyers, builders, and operators.",
-    signals: ["REST APIs", "CRM + DATA", "VOICE + TELEPHONY", "SOLUTION BRIEFS"],
-  },
-  {
-    id: "automation",
-    label: "AI Automation",
-    eyebrow: "RELIABLE BY DESIGN",
-    title: "Automate the work between the tools.",
-    copy: "Production AI agents and workflows with validation, retries, scoped tool access, monitoring, and human handoffs built in.",
-    signals: ["AI AGENTS", "N8N + ZAPIER", "RAG + TOOL CALLING", "INTERNAL APPS"],
-  },
-  {
-    id: "delivery",
-    label: "Enterprise Delivery",
-    eyebrow: "SIGNED → LIVE",
-    title: "Own the last mile to customer value.",
-    copy: "Configuration, QA, training, go-live, and optimization for complex enterprise programs—across functions, regions, and time zones.",
-    signals: ["5+ CONCURRENT", "95% ON-TIME", "<2% LOGO CHURN", "REMOTE GLOBAL"],
-  },
-];
+const emailHref = "mailto:mhoozaifa@gmail.com?subject=Solutions%20Engineering%20Opportunity";
+const whatsappHref = "https://wa.me/5511999256971?text=Hi%20Hoozaifa%2C%20I%20found%20your%20portfolio%20and%20would%20like%20to%20discuss%20an%20opportunity.";
 
-const telemetry = [
-  ["10+", "YEARS IN SAAS"],
-  ["$1.5M+", "ARR INFLUENCED"],
-  ["200K+", "MONTHLY CALLS"],
-  ["99.9%", "UPTIME"],
-];
+type System = {
+  label: string;
+  title: string;
+  context: string;
+  problem: string;
+  steps: string[];
+  description: string;
+  outcomes: [string, string][];
+  stack: string[];
+};
 
-const automationSystems = [
+const systems: System[] = [
   {
-    code: "USE CASE 01",
-    category: "VOICE AI / REVENUE",
+    label: "SYSTEM 01 · VOICE AI",
     title: "AI Front Desk & Booking Agent",
-    pain: "Missed calls, slow follow-up, and staff tied up answering the same questions.",
-    workflow: ["Answer", "qualify", "book", "update CRM", "route to a human"],
-    capability: "Voice AI over Twilio with Deepgram and ElevenLabs; availability and booking through Calendly, Google Calendar, or Outlook Calendar; customer records in HubSpot or Salesforce; live handoffs and alerts in Slack or Microsoft Teams.",
-    tools: ["Twilio", "Deepgram", "ElevenLabs", "Calendly", "Google Calendar", "Outlook Calendar", "HubSpot", "Salesforce", "Slack", "Microsoft Teams"],
-    proof: ["200K+ calls / month", "81% containment", "99.9% uptime"],
+    context: "[CONFIRM: attribution for AI Front Desk & Booking Agent — Synthflow, client project, etc.]",
+    problem: "Missed calls, slow follow-up, and staff tied up answering the same questions.",
+    steps: ["Answer", "Qualify", "Book", "Update CRM", "Handoff"],
+    description: "I built a voice system that qualifies callers, books time, updates customer records, and brings in a person when needed.",
+    outcomes: [["81%", "call containment"], ["850ms", "median response latency"], ["4.6/5", "post-call CSAT"]],
+    stack: ["Twilio", "Deepgram", "ElevenLabs", "Calendly", "HubSpot", "Slack"],
   },
   {
-    code: "USE CASE 02",
-    category: "SALES / GTM",
+    label: "SYSTEM 02 · SALES AUTOMATION",
     title: "Lead-to-Meeting Revenue Engine",
-    pain: "Leads go cold while teams research, route, and follow up manually.",
-    workflow: ["Capture", "enrich", "score", "assign", "alert", "follow up"],
-    capability: "Capture and qualify leads, enrich records, sync HubSpot/Salesforce/Pipedrive, route ownership, create Calendly or calendar bookings with Google Meet or Microsoft Teams links, and alert reps through Slack using n8n or Zapier.",
-    tools: ["HubSpot", "Salesforce", "Pipedrive", "Calendly", "Google Calendar", "Google Meet", "Microsoft Teams", "Slack", "n8n", "Zapier"],
-    proof: ["<5 min response time", "31% lift in demo bookings", "15K+ events / day"],
+    context: "[CONFIRM: attribution for Lead-to-Meeting Revenue Engine — employer, client project, etc.]",
+    problem: "Leads went cold while teams researched, routed, and followed up manually.",
+    steps: ["Capture", "Enrich", "Score", "Assign", "Alert", "Follow up"],
+    description: "I connected lead capture, enrichment, CRM ownership, scheduling, and rep alerts into one fast pipeline.",
+    outcomes: [["<5 min", "lead response time"], ["31%", "lift in demo bookings"], ["15K+", "events processed per day"]],
+    stack: ["HubSpot", "Salesforce", "Calendly", "Google Meet", "Slack", "n8n"],
   },
   {
-    code: "USE CASE 03",
-    category: "CUSTOMER SERVICE",
+    label: "SYSTEM 03 · CUSTOMER SUPPORT",
     title: "AI Support & Living Knowledge Agent",
-    pain: "Repeated questions consume support time while answers stay scattered across tickets, docs, and Slack.",
-    workflow: ["Ingest", "retrieve", "resolve", "create ticket", "escalate"],
-    capability: "Ground answers in company knowledge, resolve routine requests across Zendesk/Freshdesk/Intercom, search Confluence and Slack context, and escalate with full history to Microsoft Teams or human queues.",
-    tools: ["Zendesk", "Freshdesk", "Intercom", "Confluence", "Slack", "Microsoft Teams", "Pinecone", "Supabase"],
-    proof: ["35% auto-resolved", "40% faster first response", "45% fewer repeat questions"],
+    context: "[CONFIRM: attribution for AI Support & Living Knowledge Agent — employer, client project, etc.]",
+    problem: "Repeated questions consumed support time while answers stayed scattered across tickets, documents, and chat.",
+    steps: ["Ingest", "Retrieve", "Resolve", "Create ticket", "Escalate"],
+    description: "I built a grounded support agent that resolves routine requests and passes complex cases to people with the full history.",
+    outcomes: [["35%", "routine requests auto-resolved"], ["40%", "faster first response"], ["45%", "fewer repeat questions"]],
+    stack: ["Zendesk", "Freshdesk", "Confluence", "Slack", "Pinecone", "Supabase"],
   },
   {
-    code: "USE CASE 04",
-    category: "DATA / SCRAPING",
-    title: "Market & Prospect Intelligence Pipeline",
-    pain: "Teams lose hours collecting incomplete data from websites, directories, and public sources.",
-    workflow: ["Scrape", "normalize", "dedupe", "enrich", "sync CRM", "alert"],
-    capability: "Gather web and public-source data with Apify and scraping APIs, research/enrich with Perplexity, normalize through n8n or Make, review in Airtable/Google Sheets, and sync clean records to HubSpot or Salesforce.",
-    tools: ["Apify", "Perplexity", "n8n", "Make", "Airtable", "Google Sheets", "HubSpot", "Salesforce"],
-    proof: ["1,000+ prospects / month", "50% less research time", "10K+ CRM records / month"],
-  },
-  {
-    code: "USE CASE 05",
-    category: "OPERATIONS / DELIVERY",
+    label: "SYSTEM 04 · DELIVERY OPERATIONS",
     title: "Client Onboarding & Operations Autopilot",
-    pain: "Growth stalls when intake, setup, approvals, QA, and handoffs depend on memory.",
-    workflow: ["Intake", "validate", "configure", "QA", "train", "launch", "monitor"],
-    capability: "Connect HubSpot or Salesforce intake to Airtable, Jira/Asana delivery, Google Drive documentation, Google Calendar/Meet or Microsoft Teams sessions, Slack/Teams alerts, and n8n/Make orchestration.",
-    tools: ["HubSpot", "Salesforce", "Airtable", "Jira", "Asana", "Google Drive", "Google Calendar", "Google Meet", "Slack", "Microsoft Teams", "n8n", "Make"],
-    proof: ["3 weeks → 6 days", "15+ handoffs removed", "4× accounts, no added headcount"],
+    context: "[CONFIRM: attribution for Client Onboarding & Operations Autopilot — employer, client project, etc.]",
+    problem: "Growth stalled when intake, setup, approvals, QA, and handoffs depended on memory.",
+    steps: ["Intake", "Validate", "Configure", "QA", "Train", "Go live", "Monitor"],
+    description: "I connected intake, delivery tasks, documentation, training, alerts, and account health into one repeatable workflow.",
+    outcomes: [["3 weeks → 6 days", "client onboarding time"], ["15+", "manual handoffs removed"], ["4×", "active accounts with no added headcount"]],
+    stack: ["HubSpot", "Airtable", "Jira", "Google Drive", "Google Meet", "n8n"],
   },
 ];
 
-const integrationCategories = [
-  ["CRM", "HubSpot · Salesforce · Pipedrive"],
-  ["BOOKING", "Calendly · Google Calendar · Outlook Calendar"],
-  ["COMMUNICATION", "Slack · Microsoft Teams · Google Meet"],
-  ["AUTOMATION", "n8n · Zapier · Make"],
-  ["SUPPORT", "Zendesk · Freshdesk · Intercom"],
-];
+function Pipeline({ steps, title }: { steps: string[]; title: string }) {
+  const desktopWidth = 1040;
+  const gap = desktopWidth / steps.length;
+  const mobileHeight = steps.length * 66;
+  return (
+    <figure className="pipeline">
+      <svg className="pipeline-horizontal" viewBox={`0 0 ${desktopWidth} 82`} role="img" aria-label={`${title}: ${steps.join(" to ")}`}>
+        <defs><marker id={`arrow-${steps.length}-${steps[0]}`} markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#161513" /></marker></defs>
+        {steps.map((step, index) => {
+          const x = index * gap + 7;
+          const width = gap - 28;
+          return <g key={step}>
+            {index < steps.length - 1 && <line x1={x + width} y1="41" x2={(index + 1) * gap + 2} y2="41" stroke="#161513" strokeWidth="1" markerEnd={`url(#arrow-${steps.length}-${steps[0]})`} />}
+            <rect x={x} y="22" width={width} height="38" rx="3" fill="#F4F2ED" stroke="#161513" />
+            <text x={x + width / 2} y="45" textAnchor="middle">{step}</text>
+          </g>;
+        })}
+      </svg>
+      <svg className="pipeline-vertical" viewBox={`0 0 260 ${mobileHeight}`} role="img" aria-label={`${title}: ${steps.join(" to ")}`}>
+        <defs><marker id={`varrow-${steps.length}-${steps[0]}`} markerWidth="6" markerHeight="6" refX="3" refY="5" orient="auto"><path d="M0,0 L6,0 L3,6 Z" fill="#161513" /></marker></defs>
+        {steps.map((step, index) => {
+          const y = index * 66 + 5;
+          return <g key={step}>
+            {index < steps.length - 1 && <line x1="130" y1={y + 38} x2="130" y2={y + 60} stroke="#161513" markerEnd={`url(#varrow-${steps.length}-${steps[0]})`} />}
+            <rect x="50" y={y} width="160" height="38" rx="3" fill="#F4F2ED" stroke="#161513" />
+            <text x="130" y={y + 23} textAnchor="middle">{step}</text>
+          </g>;
+        })}
+      </svg>
+      <figcaption>{title} process schematic.</figcaption>
+    </figure>
+  );
+}
 
-const timeline = [
-  ["2024—NOW", "Synthflow", "Sr. Solutions Engineer", "Enterprise Voice AI delivery, solution architecture, automation."],
-  ["2022—2023", "Rayobyte", "Technical Account Manager", "Enterprise accounts, AI tooling, operations, revenue engineering."],
-  ["2017—2022", "SmartKargo", "Implementation Manager", "SaaS implementation and onboarding for air cargo and logistics."],
-  ["2016—2017", "Schlesinger Group", "Project Manager", "Cross-functional project delivery in Los Angeles."],
-];
-
-function Arrow() {
-  return <span aria-hidden="true">↗</span>;
+function SectionHead({ number, name, title, line }: { number: string; name: string; title: string; line?: string }) {
+  return <header className="section-head">
+    <p className="section-code">SEC. {number} / {name}</p>
+    <h2>{title}</h2>
+    {line && <p>{line}</p>}
+  </header>;
 }
 
 export default function Home() {
-  const [active, setActive] = useState(0);
-  const mission = missions[active];
-
-  function onTabKeyDown(event: React.KeyboardEvent<HTMLButtonElement>, index: number) {
-    let next = index;
-    if (event.key === "ArrowRight" || event.key === "ArrowDown") next = (index + 1) % missions.length;
-    else if (event.key === "ArrowLeft" || event.key === "ArrowUp") next = (index - 1 + missions.length) % missions.length;
-    else if (event.key === "Home") next = 0;
-    else if (event.key === "End") next = missions.length - 1;
-    else return;
-    event.preventDefault();
-    setActive(next);
-    document.getElementById(`tab-${missions[next].id}`)?.focus();
-  }
-
-  return (
-    <main>
-      <div className="scanline" aria-hidden="true" />
-      <header className="topbar">
-        <a className="identity" href="#command-deck" aria-label="Hoozaifa Morbiwala, home">
-          <span className="mark">HM</span>
-          <span>HOOZAIFA MORBIWALA</span>
-        </a>
-        <nav aria-label="Primary navigation">
-          <a href="#mission-logs">Proof</a>
-          <a href="#operator-profile">Profile</a>
-          <a className="nav-cta" href="#open-channel">Open channel</a>
-        </nav>
-      </header>
-
-      <section className="hero section-shell" id="command-deck" aria-labelledby="hero-title">
+  return <>
+    <header className="site-header">
+      <a className="hm" href="#top" aria-label="Hoozaifa Morbiwala, home">HM</a>
+      <nav aria-label="Primary navigation">
+        <a href="#proof">Proof</a><a href="#systems">Systems</a><a href="#about">About</a><a href="#contact">Contact</a>
+      </nav>
+    </header>
+    <main id="top">
+      <section className="hero">
         <div className="hero-copy">
-          <p className="kicker"><span className="pulse" /> AI SYSTEMS THAT MAKE IT TO LAUNCH.</p>
-          <p className="hero-name">HOOZAIFA MORBIWALA</p>
-          <p className="hero-role">AI SOLUTIONS ENGINEER</p>
-          <h1 id="hero-title">I turn complex AI ideas into systems that <em>launch.</em></h1>
-          <p className="hero-line">10+ years moving customers from discovery to production across Voice AI, APIs, automation, and enterprise onboarding.</p>
-          <p className="availability"><span>AVAILABLE</span> Open to full-time Solutions Engineering / AI Delivery roles and select projects.</p>
-          <div className="hero-actions">
-            <a className="button primary" href="mailto:mhoozaifa@gmail.com?subject=Solutions%20Engineering%20Opportunity">Email me <Arrow /></a>
-            <a className="button secondary" href="https://wa.me/5511999256971?text=Hi%20Hoozaifa%2C%20I%20found%20your%20portfolio%20and%20would%20like%20to%20discuss%20an%20opportunity." target="_blank" rel="noreferrer">Chat on WhatsApp</a>
+          <p className="eyebrow">AI SOLUTIONS ENGINEER · SÃO PAULO / REMOTE</p>
+          <h1>I turn complex AI ideas into systems that <em>launch.</em></h1>
+          <p className="hero-subline">10+ years taking enterprise customers from discovery to production across Voice AI, APIs, and automation.</p>
+          <p className="availability"><i aria-hidden="true" />Open to full-time Solutions Engineering and AI Delivery roles · select projects.</p>
+          <div className="actions">
+            <a className="button primary" href={emailHref}>Email me</a>
+            <a className="button secondary" href={whatsappHref} target="_blank" rel="noreferrer">WhatsApp</a>
+            <span className="confirm quiet">LinkedIn · [CONFIRM: LinkedIn URL]</span>
           </div>
         </div>
-        <figure className="mission-profile">
-          <div className="profile-status"><span className="pulse" /> MISSION PROFILE / ONLINE</div>
-          <div className="portrait-wrap">
-            <img
-              src={`${basePath}/hoozaifa-morbiwala-headshot.webp`}
-              width="1000"
-              height="1000"
-              alt="Hoozaifa Morbiwala, AI Solutions Engineer"
-              fetchPriority="high"
-              loading="eager"
-              decoding="async"
-            />
-            <span className="portrait-corner corner-a" aria-hidden="true" />
-            <span className="portrait-corner corner-b" aria-hidden="true" />
-          </div>
-          <figcaption><span>OPERATOR</span> HOOZAIFA MORBIWALA <b>23.5505° S / 46.6333° W</b></figcaption>
+        <figure className="portrait">
+          <img src={`${basePath}/hoozaifa-morbiwala-headshot.webp`} width="1000" height="1000" alt="Hoozaifa Morbiwala, AI Solutions Engineer" fetchPriority="high" />
+          <figcaption>FIG. 01 — H. MORBIWALA · SÃO PAULO, BR</figcaption>
         </figure>
-        <div className="scroll-cue" aria-hidden="true"><span>SCROLL TO TELEMETRY</span><i /></div>
       </section>
 
-      <section className="telemetry section-shell" aria-labelledby="telemetry-title">
-        <div className="section-heading">
-          <p className="kicker">LIVE TELEMETRY / MY TRACK RECORD</p>
-          <h2 id="telemetry-title">Proof, at a glance.</h2>
+      <section className="document-section proof" id="proof">
+        <SectionHead number="01" name="PROOF" title="Selected production figures." />
+        <div className="spec-table">
+          <div><strong>10+</strong><p>years in SaaS, from implementation to solutions engineering</p></div>
+          <div><strong>200K+</strong><p>calls per month handled by voice systems I&apos;ve delivered <span className="confirm">[CONFIRM: attribution, e.g. &quot;at Synthflow&quot;]</span></p></div>
+          <div><strong>99.9%</strong><p>uptime across production voice deployments</p></div>
+          <div><strong>$1.5M+</strong><p>ARR supported through presales and delivery <span className="confirm">[CONFIRM: exact wording — &quot;influenced&quot; is vague; state what you actually did]</span></p></div>
         </div>
-        <div className="metric-grid">
-          {telemetry.map(([value, label], index) => (
-            <div className="metric" key={label} style={{"--delay": `${index * 100}ms`} as React.CSSProperties}>
-              <span className="metric-index">0{index + 1}</span>
-              <strong>{value}</strong>
-              <span>{label}</span>
-              <div className="data-bar"><i style={{width: `${[78, 92, 84, 99][index]}%`}} /></div>
+      </section>
+
+      <section className="document-section" id="systems">
+        <SectionHead number="02" name="SYSTEMS" title="Systems I’ve shipped." line="Selected work from ten years in production — what was broken, what I built, and what changed." />
+        <p className="confirm system-confirm">[CONFIRM: keep or cut #04 — Market &amp; Prospect Intelligence Pipeline]</p>
+        <div className="case-studies">
+          {systems.map((system) => <article className="case-study" key={system.label}>
+            <p className="system-label">{system.label}</p>
+            <h3>{system.title}</h3>
+            <dl className="case-copy">
+              <div><dt>Context</dt><dd className="confirm">{system.context}</dd></div>
+              <div><dt>Problem</dt><dd>{system.problem}</dd></div>
+            </dl>
+            <div className="system-block">
+              <p className="minor-label">System</p>
+              <Pipeline steps={system.steps} title={system.title} />
+              <p>{system.description}</p>
             </div>
-          ))}
+            <div className="outcome-block">
+              <p className="minor-label">Outcome</p>
+              {system.outcomes.map(([figure, caption]) => <div className="outcome-row" key={figure}><strong>{figure}</strong><span>{caption}</span></div>)}
+            </div>
+            <p className="stack"><b>Stack</b>{system.stack.join(" · ")}</p>
+          </article>)}
         </div>
       </section>
 
-      <section className="logs section-shell" id="mission-logs" aria-labelledby="logs-title">
-        <div className="section-heading row">
+      <section className="document-section" id="services">
+        <SectionHead number="03" name="WHAT I DO" title="What I do." line="Solutions architecture, AI automation, and enterprise delivery — one person accountable from first call to production." />
+        <div className="three-columns">
+          <article><p>01</p><h3>Solutions architecture</h3><span>Technical discovery, integration maps, tailored demos, POCs, and rollout plans translated clearly for buyers, builders, and delivery teams.</span></article>
+          <article><p>02</p><h3>AI automation</h3><span>I build production agents and workflows with validation, retries, scoped access, monitoring, and human handoffs.</span></article>
+          <article><p>03</p><h3>Enterprise delivery</h3><span>I own configuration, QA, training, go-live, and optimization across teams, regions, and time zones.</span></article>
+        </div>
+      </section>
+
+      <section className="document-section" id="process">
+        <SectionHead number="04" name="HOW I WORK" title="How I work." />
+        <Pipeline title="Delivery process" steps={["Discover", "Architect", "Build", "QA", "Launch", "Optimize"]} />
+      </section>
+
+      <section className="document-section" id="about">
+        <SectionHead number="05" name="ABOUT" title="Technical depth. Delivery instinct." line="10+ years turning complex SaaS requirements into systems customers can understand, trust, and use." />
+        <div className="about-grid">
+          <dl className="facts">
+            <div><dt>Location</dt><dd>São Paulo, Brazil</dd></div>
+            <div><dt>Working mode</dt><dd>Remote / global teams</dd></div>
+            <div><dt>Languages</dt><dd>English · Portuguese · Spanish · Hindi · Marathi</dd></div>
+          </dl>
+          <div className="timeline">
+            <article><time>2024–NOW</time><h3>Synthflow</h3><p>Sr. Solutions Engineer</p><span className="confirm">[CONFIRM: one real outcome each for Synthflow]</span></article>
+            <article><time>2022–2023</time><h3>Rayobyte</h3><p>Technical Account Manager</p><span className="confirm">[CONFIRM: one real outcome each for Rayobyte]</span></article>
+            <article><time>2017–2022</time><h3>SmartKargo</h3><p>Implementation Manager</p><span className="confirm">[CONFIRM: one real outcome each for SmartKargo]</span></article>
+            <article><time>2016–2017</time><h3>Schlesinger Group</h3><p>Project Manager</p><span className="confirm">[CONFIRM: one real outcome each for Schlesinger]</span></article>
+          </div>
+        </div>
+      </section>
+
+      <section className="document-section contact" id="contact">
+        <SectionHead number="06" name="CONTACT + RÉSUMÉS" title="Have a complex system that needs to ship?" line="Tell me about the role, the customer, and what live needs to mean." />
+        <div className="contact-grid">
           <div>
-            <p className="kicker">MY TRACK RECORD / AUTOMATION LIBRARY</p>
-            <h2 id="logs-title">Five systems I’ve<br />already shipped.</h2>
+            <div className="actions"><a className="button primary" href={emailHref}>Email me</a><a className="button secondary" href={whatsappHref} target="_blank" rel="noreferrer">WhatsApp</a></div>
+            <p className="confirm">LinkedIn · [CONFIRM: LinkedIn URL]</p>
           </div>
-          <div className="library-intro">
-            <p>Built for growing businesses that need more capacity without more overhead.</p>
-            <span>Real workflows. Production scale. Measurable outcomes.</span>
-          </div>
-        </div>
-        <div className="integration-rail" aria-label="Common integrations">
-          <p>Integrated with the tools your team already uses.</p>
-          <div>
-            {integrationCategories.map(([category, tools]) => (
-              <span className="integration-group" key={category}><b>{category}</b>{tools}</span>
-            ))}
-          </div>
-        </div>
-        <div className="automation-library">
-          {automationSystems.map((system, index) => (
-            <article className={`automation-card ${index === 0 ? "featured" : ""}`} key={system.code}>
-              <header>
-                <p>{system.code}</p>
-                <span>{system.category}</span>
-              </header>
-              <h3>{system.title}</h3>
-              <div className="system-story">
-                <div className="story-block pain-block">
-                  <span>PAIN</span>
-                  <p>{system.pain}</p>
-                </div>
-                <div className="story-block system-block">
-                  <span>AUTOMATED SYSTEM</span>
-                  <ol className="workflow" aria-label={`${system.title} workflow`}>
-                    {system.workflow.map((step) => <li key={step}>{step}</li>)}
-                  </ol>
-                  <p>{system.capability}</p>
-                </div>
-                <div className="story-block proof-block">
-                  <span>PROOF</span>
-                  <ul>{system.proof.map((item) => <li key={item}>{item}</li>)}</ul>
-                </div>
-              </div>
-              <div className="connected-stack">
-                <span>CONNECTED STACK</span>
-                <ul>{system.tools.map((tool) => <li key={tool}>{tool}</li>)}</ul>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="mission-select section-shell" aria-labelledby="select-title">
-        <div className="section-heading row">
-          <div><p className="kicker">WHAT I DO / MISSION SELECT</p><h2 id="select-title">How I create leverage.</h2></div>
-          <p className="section-note">Three operating modes.<br />One accountable owner.</p>
-        </div>
-        <div className="mission-console">
-          <div className="tabs" role="tablist" aria-label="Mission capabilities" aria-orientation="vertical">
-            {missions.map((item, index) => (
-              <button
-                id={`tab-${item.id}`}
-                role="tab"
-                aria-selected={active === index}
-                aria-controls={`panel-${item.id}`}
-                tabIndex={active === index ? 0 : -1}
-                onClick={() => setActive(index)}
-                onKeyDown={(event) => onTabKeyDown(event, index)}
-                key={item.id}
-              >
-                <span>0{index + 1}</span>{item.label}<i aria-hidden="true">→</i>
-              </button>
-            ))}
-          </div>
-          <div className="mission-panel" id={`panel-${mission.id}`} role="tabpanel" aria-labelledby={`tab-${mission.id}`}>
-            <div className="panel-radar" aria-hidden="true"><i /><i /><span /></div>
-            <p className="kicker">{mission.eyebrow}</p>
-            <h3>{mission.title}</h3>
-            <p>{mission.copy}</p>
-            <ul>{mission.signals.map((signal) => <li key={signal}>{signal}</li>)}</ul>
+          <div className="resumes">
+            <h3>Résumés.</h3><p>Pick the one that fits the role.</p>
+            <a href={`${basePath}/Hoozaifa-Morbiwala-Solutions-Engineer-Resume.pdf`} download><span>01</span>Solutions Engineering</a>
+            <a href={`${basePath}/Hoozaifa-Morbiwala-Onboarding-Implementation-Resume.pdf`} download><span>02</span>Onboarding &amp; Implementation</a>
           </div>
         </div>
       </section>
-
-      <section className="sequence section-shell" aria-labelledby="sequence-title">
-        <div className="section-heading">
-          <p className="kicker">HOW I DELIVER / LAUNCH SEQUENCE</p>
-          <h2 id="sequence-title">From ambiguity to launch.</h2>
-        </div>
-        <ol>
-          {["Discover", "Architect", "Build", "QA", "Launch", "Optimize"].map((step, index) => (
-            <li key={step}><span>0{index + 1}</span><strong>{step}</strong><i aria-hidden="true">→</i></li>
-          ))}
-        </ol>
-      </section>
-
-      <section className="profile section-shell" id="operator-profile" aria-labelledby="profile-title">
-        <div className="profile-intro">
-          <p className="kicker">WHERE I’VE DONE IT / OPERATOR PROFILE</p>
-          <h2 id="profile-title">Technical depth.<br />Delivery instinct.</h2>
-          <p>10+ years turning complex SaaS requirements into systems customers can understand, trust, and use.</p>
-          <div className="profile-meta">
-            <p><span>BASE</span>São Paulo, Brazil</p>
-            <p><span>MODE</span>Remote / global teams</p>
-            <p><span>LANGUAGES</span>English · Portuguese · Spanish · Hindi · Marathi</p>
-          </div>
-        </div>
-        <div className="timeline">
-          {timeline.map(([year, company, role, detail]) => (
-            <article key={company}>
-              <time>{year}</time><div><h3>{company}</h3><p className="role">{role}</p><p>{detail}</p></div>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="contact section-shell" id="open-channel" aria-labelledby="contact-title">
-        <div className="contact-main">
-          <p className="kicker"><span className="pulse" /> OPEN CHANNEL</p>
-          <h2 id="contact-title">Have a complex system<br />that needs to <em>ship?</em></h2>
-          <p>Let’s talk about the opportunity, the customer, and what “live” needs to mean.</p>
-          <div className="hero-actions">
-            <a className="button primary" href="mailto:mhoozaifa@gmail.com?subject=Solutions%20Engineering%20Opportunity">Email me <Arrow /></a>
-            <a className="button secondary" href="https://wa.me/5511999256971?text=Hi%20Hoozaifa%2C%20I%20found%20your%20portfolio%20and%20would%20like%20to%20discuss%20an%20opportunity." target="_blank" rel="noreferrer">Chat on WhatsApp</a>
-          </div>
-        </div>
-        <aside className="resume-console" aria-labelledby="resume-title">
-          <p className="kicker">RESUME CONSOLE</p>
-          <h3 id="resume-title">Choose your briefing.</h3>
-          <a href={`${basePath}/Hoozaifa-Morbiwala-Solutions-Engineer-Resume.pdf`} download><span><b>01</b>Solutions Engineering<small>AI · AUTOMATION · PRESALES</small></span><Arrow /></a>
-          <a href={`${basePath}/Hoozaifa-Morbiwala-Onboarding-Implementation-Resume.pdf`} download><span><b>02</b>Onboarding & Implementation<small>ADOPTION · DELIVERY · SUCCESS</small></span><Arrow /></a>
-        </aside>
-      </section>
-
-      <footer className="section-shell">
-        <p>HOOZAIFA MORBIWALA <span>·</span> AI SOLUTIONS ENGINEER</p>
-        <p>MISSION CONTROL / 2026</p>
-      </footer>
     </main>
-  );
+    <footer>
+      <div className="title-block">
+        <div><span>NAME</span><strong>Hoozaifa Morbiwala</strong></div>
+        <div><span>TITLE</span><strong>AI Solutions Engineer</strong></div>
+        <div><span>LOCATION</span><strong>São Paulo, BR</strong></div>
+        <div><span>REV</span><strong>2026.07</strong></div>
+        <div><span>CONTACT</span><strong>mhoozaifa@gmail.com</strong></div>
+      </div>
+      <p>Typeset in Archivo and IBM Plex Mono. Designed and written by me.</p>
+    </footer>
+  </>;
 }
