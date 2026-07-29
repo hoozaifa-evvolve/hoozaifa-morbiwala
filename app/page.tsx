@@ -45,7 +45,8 @@ const automationSystems = [
     title: "AI Front Desk & Booking Agent",
     pain: "Missed calls, slow follow-up, and staff tied up answering the same questions.",
     workflow: ["Answer", "qualify", "book", "update CRM", "route to a human"],
-    capability: "Always-on inbound and outbound voice agents for FAQs, qualification, scheduling, routing, and live handoff.",
+    capability: "Voice AI over Twilio with Deepgram and ElevenLabs; availability and booking through Calendly, Google Calendar, or Outlook Calendar; customer records in HubSpot or Salesforce; live handoffs and alerts in Slack or Microsoft Teams.",
+    tools: ["Twilio", "Deepgram", "ElevenLabs", "Calendly", "Google Calendar", "Outlook Calendar", "HubSpot", "Salesforce", "Slack", "Microsoft Teams"],
     proof: ["200K+ calls / month", "81% containment", "99.9% uptime"],
   },
   {
@@ -54,7 +55,8 @@ const automationSystems = [
     title: "Lead-to-Meeting Revenue Engine",
     pain: "Leads go cold while teams research, route, and follow up manually.",
     workflow: ["Capture", "enrich", "score", "assign", "alert", "follow up"],
-    capability: "Connect forms, enrichment, CRM, ownership rules, Slack, and personalized follow-up into one fast pipeline.",
+    capability: "Capture and qualify leads, enrich records, sync HubSpot/Salesforce/Pipedrive, route ownership, create Calendly or calendar bookings with Google Meet or Microsoft Teams links, and alert reps through Slack using n8n or Zapier.",
+    tools: ["HubSpot", "Salesforce", "Pipedrive", "Calendly", "Google Calendar", "Google Meet", "Microsoft Teams", "Slack", "n8n", "Zapier"],
     proof: ["<5 min response time", "31% lift in demo bookings", "15K+ events / day"],
   },
   {
@@ -63,7 +65,8 @@ const automationSystems = [
     title: "AI Support & Living Knowledge Agent",
     pain: "Repeated questions consume support time while answers stay scattered across tickets, docs, and Slack.",
     workflow: ["Ingest", "retrieve", "resolve", "create ticket", "escalate"],
-    capability: "RAG-powered support agents that answer routine questions, update systems, and hand complex issues to people with context.",
+    capability: "Ground answers in company knowledge, resolve routine requests across Zendesk/Freshdesk/Intercom, search Confluence and Slack context, and escalate with full history to Microsoft Teams or human queues.",
+    tools: ["Zendesk", "Freshdesk", "Intercom", "Confluence", "Slack", "Microsoft Teams", "Pinecone", "Supabase"],
     proof: ["35% auto-resolved", "40% faster first response", "45% fewer repeat questions"],
   },
   {
@@ -72,7 +75,8 @@ const automationSystems = [
     title: "Market & Prospect Intelligence Pipeline",
     pain: "Teams lose hours collecting incomplete data from websites, directories, and public sources.",
     workflow: ["Scrape", "normalize", "dedupe", "enrich", "sync CRM", "alert"],
-    capability: "Reliable web-data pipelines that turn fragmented sources into clean prospect, competitor, pricing, or market intelligence.",
+    capability: "Gather web and public-source data with Apify and scraping APIs, research/enrich with Perplexity, normalize through n8n or Make, review in Airtable/Google Sheets, and sync clean records to HubSpot or Salesforce.",
+    tools: ["Apify", "Perplexity", "n8n", "Make", "Airtable", "Google Sheets", "HubSpot", "Salesforce"],
     proof: ["1,000+ prospects / month", "50% less research time", "10K+ CRM records / month"],
   },
   {
@@ -81,9 +85,18 @@ const automationSystems = [
     title: "Client Onboarding & Operations Autopilot",
     pain: "Growth stalls when intake, setup, approvals, QA, and handoffs depend on memory.",
     workflow: ["Intake", "validate", "configure", "QA", "train", "launch", "monitor"],
-    capability: "End-to-end delivery workflows connecting forms, CRM, tasks, checklists, documentation, alerts, and account health.",
+    capability: "Connect HubSpot or Salesforce intake to Airtable, Jira/Asana delivery, Google Drive documentation, Google Calendar/Meet or Microsoft Teams sessions, Slack/Teams alerts, and n8n/Make orchestration.",
+    tools: ["HubSpot", "Salesforce", "Airtable", "Jira", "Asana", "Google Drive", "Google Calendar", "Google Meet", "Slack", "Microsoft Teams", "n8n", "Make"],
     proof: ["3 weeks → 6 days", "15+ handoffs removed", "4× accounts, no added headcount"],
   },
+];
+
+const integrationCategories = [
+  ["CRM", "HubSpot · Salesforce · Pipedrive"],
+  ["BOOKING", "Calendly · Google Calendar · Outlook Calendar"],
+  ["COMMUNICATION", "Slack · Microsoft Teams · Google Meet"],
+  ["AUTOMATION", "n8n · Zapier · Make"],
+  ["SUPPORT", "Zendesk · Freshdesk · Intercom"],
 ];
 
 const timeline = [
@@ -178,6 +191,59 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="logs section-shell" id="mission-logs" aria-labelledby="logs-title">
+        <div className="section-heading row">
+          <div>
+            <p className="kicker">MY TRACK RECORD / AUTOMATION LIBRARY</p>
+            <h2 id="logs-title">Five systems I’ve<br />already shipped.</h2>
+          </div>
+          <div className="library-intro">
+            <p>Built for growing businesses that need more capacity without more overhead.</p>
+            <span>Real workflows. Production scale. Measurable outcomes.</span>
+          </div>
+        </div>
+        <div className="integration-rail" aria-label="Common integrations">
+          <p>Integrated with the tools your team already uses.</p>
+          <div>
+            {integrationCategories.map(([category, tools]) => (
+              <span className="integration-group" key={category}><b>{category}</b>{tools}</span>
+            ))}
+          </div>
+        </div>
+        <div className="automation-library">
+          {automationSystems.map((system, index) => (
+            <article className={`automation-card ${index === 0 ? "featured" : ""}`} key={system.code}>
+              <header>
+                <p>{system.code}</p>
+                <span>{system.category}</span>
+              </header>
+              <h3>{system.title}</h3>
+              <div className="system-story">
+                <div className="story-block pain-block">
+                  <span>PAIN</span>
+                  <p>{system.pain}</p>
+                </div>
+                <div className="story-block system-block">
+                  <span>AUTOMATED SYSTEM</span>
+                  <ol className="workflow" aria-label={`${system.title} workflow`}>
+                    {system.workflow.map((step) => <li key={step}>{step}</li>)}
+                  </ol>
+                  <p>{system.capability}</p>
+                </div>
+                <div className="story-block proof-block">
+                  <span>PROOF</span>
+                  <ul>{system.proof.map((item) => <li key={item}>{item}</li>)}</ul>
+                </div>
+              </div>
+              <div className="connected-stack">
+                <span>CONNECTED STACK</span>
+                <ul>{system.tools.map((tool) => <li key={tool}>{tool}</li>)}</ul>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
       <section className="mission-select section-shell" aria-labelledby="select-title">
         <div className="section-heading row">
           <div><p className="kicker">WHAT I DO / MISSION SELECT</p><h2 id="select-title">How I create leverage.</h2></div>
@@ -207,47 +273,6 @@ export default function Home() {
             <p>{mission.copy}</p>
             <ul>{mission.signals.map((signal) => <li key={signal}>{signal}</li>)}</ul>
           </div>
-        </div>
-      </section>
-
-      <section className="logs section-shell" id="mission-logs" aria-labelledby="logs-title">
-        <div className="section-heading row">
-          <div>
-            <p className="kicker">MY TRACK RECORD / AUTOMATION LIBRARY</p>
-            <h2 id="logs-title">Five systems I’ve<br />already shipped.</h2>
-          </div>
-          <div className="library-intro">
-            <p>Built for growing businesses that need more capacity without more overhead.</p>
-            <span>Real workflows. Production scale. Measurable outcomes.</span>
-          </div>
-        </div>
-        <div className="automation-library">
-          {automationSystems.map((system, index) => (
-            <article className={`automation-card ${index === 0 ? "featured" : ""}`} key={system.code}>
-              <header>
-                <p>{system.code}</p>
-                <span>{system.category}</span>
-              </header>
-              <h3>{system.title}</h3>
-              <div className="system-story">
-                <div className="story-block pain-block">
-                  <span>PAIN</span>
-                  <p>{system.pain}</p>
-                </div>
-                <div className="story-block system-block">
-                  <span>AUTOMATED SYSTEM</span>
-                  <ol className="workflow" aria-label={`${system.title} workflow`}>
-                    {system.workflow.map((step) => <li key={step}>{step}</li>)}
-                  </ol>
-                  <p>{system.capability}</p>
-                </div>
-                <div className="story-block proof-block">
-                  <span>PROOF</span>
-                  <ul>{system.proof.map((item) => <li key={item}>{item}</li>)}</ul>
-                </div>
-              </div>
-            </article>
-          ))}
         </div>
       </section>
 
